@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+@import "./variables";
 @import "@material/floating-label/mixins";
 @import "@material/theme/mixins";
 @import "@material/shape/mixins";
@@ -206,5 +207,97 @@
     bottom: 12px;
     line-height: 1.75rem;
     pointer-events: none;
+  }
+}
+
+@mixin mdc-select-leading-icon-layout_ ($position, $padding) {
+  .mdc-select__icon {
+    @include mdc-rtl-reflexive-position(left, $position);
+  }
+
+  // Move the input's position, to allow room for the icon
+  .mdc-select__native-control,
+  .mdc-select__selected-text {
+    @include mdc-rtl-reflexive-property(padding, $padding /* left-value */, 32px /* right-value */);
+  }
+
+  .mdc-floating-label {
+    @include mdc-rtl-reflexive-position(left, $padding);
+  }
+}
+
+@mixin mdc-select-with-leading-icon_ {
+  @include mdc-select-leading-icon-layout_(16px, 48px);
+
+  &.mdc-select--outlined {
+    @include mdc-floating-label-float-position($mdc-select-outlined-label-position-y, $mdc-select-outlined-with-leading-icon-label-position-x);
+    @include mdc-floating-label-shake-animation(text-field-outlined-leading-icon);
+
+    @include mdc-rtl {
+      @include mdc-floating-label-shake-animation(text-field-outlined-leading-icon-rtl);
+    }
+  }
+
+  &.mdc-select__menu .mdc-list-item__text {
+    @include mdc-rtl-reflexive-property(padding, 48px /* left-value */, 32px /* right-value */);
+  }
+}
+
+@mixin mdc-select-icon_ {
+  .mdc-select__icon {
+    @include mdc-theme-prop(color, $mdc-select-icon-color);
+
+    position: absolute;
+    bottom: 16px;
+    cursor: pointer;
+  }
+}
+
+@mixin mdc-select-text-and-control_ {
+  .mdc-select__native-control,
+  .mdc-select__selected-text {
+    @include mdc-rtl-reflexive-property(padding, $mdc-select-label-padding, $mdc-select-arrow-padding);
+    @include mdc-typography(subtitle1);
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    &::-ms-value {
+      background-color: transparent;
+      color: inherit;
+    }
+
+    // counteracts the extra text padding that Firefox adds by default
+    @-moz-document url-prefix("") {
+      text-indent: -2px;
+    }
+
+    // stylelint-disable-next-line selector-max-type, plugin/selector-bem-pattern
+    > option {
+      @include mdc-theme-prop(background-color, surface);
+
+      color: inherit; // Override default user agent stylesheet
+    }
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+    padding-top: 20px;
+    padding-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 4px 4px 0 0;
+    outline: none;
+    background-color: transparent;
+    color: inherit; // Override default user agent stylesheet
+    white-space: nowrap;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .mdc-select__selected-text {
+    min-width: 200px;
+    padding-top: 22px;
   }
 }

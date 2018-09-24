@@ -34,7 +34,7 @@
 
 // postcss-bem-linter: define select
 .mdc-select {
-  @include mdc-select-container-fill-color($mdc-select-box-fill-color);
+  @include mdc-select-container-fill-color($mdc-select-fill-color);
   @include mdc-ripple-surface;
   @include mdc-ripple-radius-bounded;
   // Select intentionally omits press ripple, so each state needs to be specified individually.
@@ -45,6 +45,7 @@
   @include mdc-select-label-color($mdc-select-label-color);
   @include mdc-select-bottom-line-color($mdc-select-bottom-line-idle-color);
   @include mdc-select-shape-radius(medium);
+  @include mdc-select-icon_;
 
   // Focused state colors
   @include mdc-select-focused-bottom-line-color(primary);
@@ -85,52 +86,6 @@
     }
   }
 
-  &__native-control,
-  &__selected-text {
-    @include mdc-rtl-reflexive-property(padding, $mdc-select-label-padding, $mdc-select-arrow-padding);
-    @include mdc-typography(subtitle1);
-
-    &::-ms-expand {
-      display: none;
-    }
-
-    &::-ms-value {
-      background-color: transparent;
-      color: inherit;
-    }
-
-    // counteracts the extra text padding that Firefox adds by default
-    @-moz-document url-prefix("") {
-      text-indent: -2px;
-    }
-
-    // stylelint-disable-next-line selector-max-type, plugin/selector-bem-pattern
-    > option {
-      @include mdc-theme-prop(background-color, surface);
-
-      color: inherit; // Override default user agent stylesheet
-    }
-
-    width: 100%;
-    height: 56px;
-    padding-top: 20px;
-    padding-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid;
-    outline: none;
-    background-color: transparent;
-    color: inherit; // Override default user agent stylesheet
-    white-space: nowrap;
-    cursor: pointer;
-    appearance: none;
-    box-sizing: border-box;
-  }
-
-  &__selected-text {
-    padding-top: 22px;
-    min-width: 200px;
-  }
-
   @include mdc-select-focused-line-ripple_ {
     &::after {
       transform: scale(1, 2);
@@ -138,6 +93,8 @@
     }
   }
 }
+
+@include mdc-select-text-and-control_();
 
 .mdc-select--outlined {
   @include mdc-select-container-fill-color(transparent);
@@ -193,6 +150,10 @@
     display: none;
   }
 
+  .mdc-select__icon {
+    @include mdc-theme-prop(color, $mdc-select-disabled-icon-color);
+  }
+
   // stylelint-disable-next-line plugin/selector-bem-pattern
   .mdc-select__native-control,
   .mdc-select__selected-text {
@@ -218,6 +179,10 @@
 
   cursor: default;
   pointer-events: none;
+}
+
+.mdc-select--with-leading-icon {
+  @include mdc-select-with-leading-icon_;
 }
 
 .mdc-select__menu .mdc-list .mdc-list-item--selected {
