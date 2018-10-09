@@ -133,12 +133,12 @@
 
 @mixin mdc-select-focused-outline_ {
   &.mdc-select--focused {
+    @include mdc-notched-outline-idle-color(primary);
+
     .mdc-notched-outline {
       @include mdc-notched-outline-stroke-width(2px);
       @content;
     }
-
-    @include mdc-notched-outline-idle-color(primary);
   }
 }
 
