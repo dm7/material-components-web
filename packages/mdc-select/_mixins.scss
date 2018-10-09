@@ -132,9 +132,13 @@
 }
 
 @mixin mdc-select-focused-outline_ {
-  &.mdc-select--focused .mdc-notched-outline {
-    @include mdc-notched-outline-stroke-width(2px);
-    @content;
+  &.mdc-select--focused {
+    .mdc-notched-outline {
+      @include mdc-notched-outline-stroke-width(2px);
+      @content;
+    }
+
+    @include mdc-notched-outline-idle-color(primary);
   }
 }
 
@@ -287,12 +291,11 @@
 
     box-sizing: border-box;
     width: 100%;
-    height: 56px;
+    height: $mdc-select-height;
     padding-top: 20px;
     padding-bottom: 4px;
     border: none;
     border-bottom: 1px solid;
-    border-radius: 4px 4px 0 0;
     outline: none;
     background-color: transparent;
     color: inherit; // Override default user agent stylesheet
@@ -353,7 +356,7 @@
   @include mdc-select-focused-outline-color(primary);
   @include mdc-floating-label-float-position($mdc-select-outlined-label-position-y);
   @include mdc-floating-label-shake-animation(text-field-outlined);
-  @include mdc-select-outline-corner-radius($mdc-select-border-radius);
+  @include mdc-select-outline-shape-radius(medium);
   @include mdc-states-base-color(transparent);
   @include mdc-select-container-fill-color(transparent);
 

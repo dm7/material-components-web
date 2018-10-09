@@ -60,13 +60,28 @@
   position: relative;
   box-sizing: border-box;
   height: $mdc-select-height;
-  background-repeat: no-repeat;
-  background-position: right 10px center;
   overflow: hidden;
   will-change: opacity, transform, color;
 
   @include mdc-rtl {
     background-position: left 10px center;
+  }
+
+  &__dropdown-icon {
+    @include mdc-select-dd-arrow-svg-bg_($mdc-select-dropdown-color, $mdc-select-dropdown-opacity);
+    @include mdc-rtl-reflexive(left, auto, right, 8px);
+
+    position: absolute;
+    bottom: 16px;
+    width: 24px;
+    height: 24px;
+    transition: transform $mdc-select-dropdown-transition-duration $mdc-animation-standard-curve-timing-function;
+    pointer-events: none;
+
+    .mdc-select--focused & {
+      transform: rotate(180deg) translateY(-5px);
+      transition: transform $mdc-select-dropdown-transition-duration $mdc-animation-standard-curve-timing-function;
+    }
   }
 
   @include mdc-select-focused-line-ripple_ {
