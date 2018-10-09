@@ -124,8 +124,11 @@ class MDCSelectFoundation extends MDCFoundation {
    */
   handleChange() {
     const optionHasValue = this.adapter_.getValue().length > 0;
-    this.adapter_.floatLabel(optionHasValue);
-    this.notchOutline(optionHasValue);
+    const isFocused = this.adapter_.hasClass(cssClasses.FOCUSED);
+    if (!isFocused) {
+      this.adapter_.floatLabel(optionHasValue);
+      this.notchOutline(optionHasValue);
+    }
   }
 
   /**
@@ -133,10 +136,10 @@ class MDCSelectFoundation extends MDCFoundation {
    */
   handleFocus() {
     if (this.adapter_.isMenuOpened()) return;
-    this.adapter_.addClass('mdc-select--focused');
+    this.adapter_.addClass(cssClasses.FOCUSED);
     this.adapter_.floatLabel(true);
     this.notchOutline(true);
-    this.adapter_.addClass('mdc-select--focused');
+    this.adapter_.addClass(cssClasses.FOCUSED);
     this.adapter_.activateBottomLine();
     this.adapter_.openMenu();
   }
@@ -146,9 +149,9 @@ class MDCSelectFoundation extends MDCFoundation {
    */
   handleBlur() {
     if (this.adapter_.isMenuOpened()) return;
-    this.adapter_.removeClass('mdc-select--focused');
+    this.adapter_.removeClass(cssClasses.FOCUSED);
     this.handleChange();
-    this.adapter_.removeClass('mdc-select--focused');
+    this.adapter_.removeClass(cssClasses.FOCUSED);
     this.adapter_.deactivateBottomLine();
   }
 
@@ -156,7 +159,7 @@ class MDCSelectFoundation extends MDCFoundation {
     if (this.adapter_.isMenuOpened()) return;
     this.adapter_.setRippleCenter(normalizedX);
 
-    if (this.adapter_.hasClass('mdc-select--focused')) {
+    if (this.adapter_.hasClass(cssClasses.FOCUSED)) {
       this.adapter_.openMenu();
     }
   }
@@ -167,7 +170,7 @@ class MDCSelectFoundation extends MDCFoundation {
     const isEnter = event.key === 'Enter' || event.keyCode === 13;
     const isSpace = event.key === 'Space' || event.keyCode === 32;
 
-    if (this.adapter_.hasClass('mdc-select--focused') && (isEnter || isSpace)) {
+    if (this.adapter_.hasClass(cssClasses.FOCUSED) && (isEnter || isSpace)) {
       this.adapter_.openMenu();
       event.preventDefault();
     }
@@ -181,13 +184,14 @@ class MDCSelectFoundation extends MDCFoundation {
     if (!this.adapter_.hasOutline()) {
       return;
     }
+    const isFocused = this.adapter_.hasClass(cssClasses.FOCUSED);
 
     if (openNotch) {
       const labelScale = numbers.LABEL_SCALE;
       const labelWidth = this.adapter_.getLabelWidth() * labelScale;
       const isRtl = this.adapter_.isRtl();
       this.adapter_.notchOutline(labelWidth, isRtl);
-    } else {
+    } else if (!isFocused) {
       this.adapter_.closeOutline();
     }
   }

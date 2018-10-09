@@ -132,13 +132,9 @@
 }
 
 @mixin mdc-select-focused-outline_ {
-  &.mdc-select--focused {
-    @include mdc-notched-outline-idle-color(primary);
-
-    .mdc-notched-outline {
-      @include mdc-notched-outline-stroke-width(2px);
-      @content;
-    }
+  &.mdc-select--focused .mdc-notched-outline {
+    @include mdc-notched-outline-stroke-width(2px);
+    @content;
   }
 }
 
@@ -243,7 +239,7 @@
   }
 
   &.mdc-select__menu .mdc-list-item__text {
-    @include mdc-rtl-reflexive-property(padding, 48px /* left-value */, 32px /* right-value */);
+    @include mdc-rtl-reflexive-property(padding, 32px /* left-value */, 32px /* right-value */);
   }
 }
 
@@ -306,11 +302,14 @@
 }
 
 @mixin mdc-select-disabled_ {
-  @include mdc-select-dd-arrow-svg-bg_($mdc-select-dropdown-color, $mdc-select-disabled-dropdown-opacity);
   @include mdc-select-container-fill-color_($mdc-select-disabled-fill-color);
 
   .mdc-floating-label {
     @include mdc-floating-label-ink-color($mdc-select-disabled-label-color);
+  }
+
+  .mdc-select__dropdown-icon {
+    @include mdc-select-dd-arrow-svg-bg_($mdc-select-dropdown-color, $mdc-select-disabled-dropdown-opacity);
   }
 
   // stylelint-disable-next-line plugin/selector-bem-pattern
